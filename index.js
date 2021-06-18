@@ -1,8 +1,5 @@
 const cheerio = require('cheerio')
 const axios = require('axios');
-const {
-    each
-} = require('cheerio/lib/api/traversing');
 
 const api = {
     "mp3": "https://www.yt-download.org/api/button/mp3/",
@@ -28,14 +25,32 @@ async function mp3(id) {
     return res
 }
 
-async function ytdl(id, type) {
+function getVIdeoId(videoUrl) {
+
+    if(videoUrl.includes('v=') && !videoUrl.includes('&')) {
+      formatedUrl = videoUrl.split('v=');
+
+      return formatedUrl[1];
+    } else if(videoUrl.includes('&')) {
+      formatedUrl = videoUrl.split('v=');
+      formatedUrl = formatedUrl[1].split('&');
+
+      return formatedUrl[0];
+    }
+
+    formatedUrl = videoUrl.split('/');
+    
+    return formatedUrl[formatedUrl.length - 1];
+}
+
+async function ytdl(id) {
     if (id == '') {
         throw new Error('Give me valid args')
     } else {
-        var $ = cheerio.load(await mp3(id))
+        var $ = cheerio.load(await mp3(getVIdeoId(id)))
         var arr = []
         var a = await $('a').each((index, elem) => {
-            arr.push(elem.attribs.href)
+            arr.push({"url":elem.attribs.href, "quality":$(elem.children[3]).text()})
         })
         return arr
     }
