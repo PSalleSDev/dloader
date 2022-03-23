@@ -1,16 +1,15 @@
 {
-  "name": "lib",
-  "version": "1.0.0",
-  "description": "",
-  "main": "index.js",
+  "name": "dloader",
+  "version": "1.0.4",
+  "description": "DLoader is an api that downloads videos and audios from various streaming platforms",
+  "main": "loader.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "keywords": [],
-  "author": "",
+  "keywords": ["youtube", "vimeo", "soundcloud", "facebook", "twitter", "twitch", "tiktok", "download", "youtubedl", "youtube download"],
+  "author": "salles",
   "license": "ISC",
   "dependencies": {
-    "axios": "^0.21.1",
-    "cheerio": "*"
+    "request": "^2.88.2"
   }
 }
